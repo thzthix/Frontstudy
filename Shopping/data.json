@@ -1,0 +1,60 @@
+{
+    
+        "items": [
+          {
+            "type": "cake",
+            "taste": "chocolate",
+            "image": "cake.svg",
+            "size":  "large"
+          },
+          {
+            "type": "icecream",
+            "taste": "chocolate",
+            "image": "icecream.svg",
+            "size":  "large"
+          },
+          {
+            "type": "cookie",
+            "taste": "chocolate",
+            "image": "cookie.svg",
+            "size":  "large"
+          },
+          {
+            "type": "cake",
+            "taste": "strawberry",
+            "image": "cake.svg",
+            "size":  "medium"
+          },
+          {
+            "type": "icecream",
+            "taste": "strawberry",
+            "image": "icecream.svg",
+            "size":  "medium"
+          },
+          {
+            "type": "cookie",
+            "taste": "strawberry",
+            "image": "cookie.svg",
+            "size":  "medium"
+          },
+          {
+            "type": "cake",
+            "taste": "banana",
+            "image": "cake.svg",
+            "size":  "small"
+          },
+          {
+            "type": "icecream",
+            "taste": "banana",
+            "image": "icecream.svg",
+            "size":  "small"
+          },
+          {
+            "type": "cookie",
+            "taste": "banana",
+            "image": "cookie.svg",
+            "size":  "small"
+          }
+        ]
+      
+  }
