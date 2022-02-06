@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반응속도</title>
+    <style>
+    #screen {
+    width: 300px;
+    height: 200px;
+    text-align: center;
+    user-select: none;
+    }
+    #screen.waiting {
+    background-color: #e0f7fa;
+    }
+    #screen.ready {
+    background-color: #ec407a;
+    color: white;
+    }
+    #screen.now {
+    background-color: #aed581;
+    }
+    </style>
+</head>
+<body>
+<div id="screen" class="waiting">클릭해서 시작하세요</div>
+<div id="result"></div>
+<script>
+const $screen=document.querySelector('#screen');
+const $result=document.querySelector('#result');
+let startTime;
+let endTime;
+const records=[];
+let timeoutId;
+
+$screen.addEventListener('click',(event)=>{
+    if(event.target.classList.contains('waiting')){ //파랑
+        $screen.classList.remove('waiting');
+        $screen.classList.add('ready');
+        $screen.textContent='초록색이 되면 클릭하세요';
+        timeoutId=setTimeout(function(){
+            startTime=new Date();
+            $screen.classList.remove('ready');
+            $screen.classList.add('now');
+            $screen.textContent='클릭하세요!';
+            //첫시간 재기
+        },Math.floor(Math.random()*1000)+2000);  //2초에서 3초사이 2000~3000사이 수
+    }else if(event.target.classList.contains('ready')){ //빨강
+    clearTimeout(timeoutId);
+    startTime=new Date();
+    $screen.classList.remove('ready');
+    $screen.classList.add('waiting');
+    $screen.textContent='너무 성급합니담!';
+
+    }else if(event.target.classList.contains('now')){ //초록
+    endTime=new Date();//끝 시간 재기
+    const current=endTime-startTime;//시간 차이 저장하기
+    records.push(current);
+    const average=records.reduce((a,c)=>a+c)/records.length;
+    $result.textContent=`현재:${current}ms, 평균: ${average}ms`;
+    if(records.length>=5){
+        records.sort((a,b)=>a-b);
+        for(let i=0;i<5;i++){
+        const $TOP=document.createElement('div');
+        $TOP.textContent=`TOP ${i+1}:${records[i]}ms`;
+        $result.appendChild($TOP);
+    }
+    
+    }
+    /*
+    const topFive=records.sort((a,c)=>a-c).slice(0,5);
+    topFive.forEach((top,index)=>{
+        $result.append(
+            document.createElement('br'),
+            `TOP${index+1}: ${TOP}ms`
+        );
+    });
+    */
+    startTime=null;
+    endTime=null;
+    $screen.classList.remove('now')
+    $screen.classList.add('waiting');
+    $screen.textContent='클릭해서 시작하세요';
+    }
+})
+</script>
+</body>
+</html>
