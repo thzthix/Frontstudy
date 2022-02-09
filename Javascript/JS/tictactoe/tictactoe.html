@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>틱택토</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          background-color: #f48fb1;
+        }
+      
+        td {
+          border: 1px solid #ab47bc;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          color: #673ab7;
+        }
+      </style>
+</head>
+<body>
+      <!-- <table>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table> -->
+    <script>
+        const {body}=document; //const body=document.body; 변수와 속성이 같을때
+        /*const arr=[1,2,3,4,5];
+        const one=arr[0];
+        const [one,two,three,four,five]=arr;
+        const [one,,,four,five]=arr;*/
+        const $result=document.createElement('div');
+        const $table=document.createElement('table');
+        const rows=[];
+        let turn='O';
+        let comTurn='X';
+        // [
+        //   [td,td,td],
+        //   [td,td,td],
+        //   [td,td,td],
+        //   ]
+        const checkWinner=(target)=>{
+          const rowIndex=target.parentNode.rowIndex;
+          const cellIndex=target.cellIndex;
+          // let rowIndex;
+          // let cellIndex;
+          // rows.forEach((row,ri)=>{
+          //   row.forEach((cell,ci)=>{
+          //     if(cell===target){
+          //       rowIndex=ri;
+          //       cellIndex=ci;
+          //     }
+          //   });
+          // });
+          //세 칸 다 채워졌나?
+          let hasWinner=false;
+          //가로줄 검사
+          if(
+            rows[rowIndex][0].textContent===turn&&
+            rows[rowIndex][1].textContent===turn&&
+            rows[rowIndex][2].textContent===turn
+          ){
+            hasWinner=true;
+          }
+          //세로줄 검사
+          if(
+            rows[0][cellIndex].textContent===turn&&
+            rows[1][cellIndex].textContent===turn&&
+            rows[2][cellIndex].textContent===turn
+          ){
+            hasWinner=true;
+          }
+          //대각선 검사
+          if(
+            rows[0][0].textContent===turn&&
+            rows[1][1].textContent===turn&&
+            rows[2][2].textContent===turn)
+            {hasWinner=true;
+          }
+          if(
+            rows[0][2].textContent===turn&&
+            rows[1][1].textContent===turn&&
+            rows[2][0].textContent===turn
+          ){
+            hasWinner=true;
+          }
+          return hasWinner;
+        }
+        const checkWinnerCom=(randri,randci)=>{
+          
+          let hasWinner=false;
+          //가로줄 검사
+          if(
+            rows[randri][0].textContent===comTurn&&
+            rows[randri][1].textContent===comTurn&&
+            rows[randri][2].textContent===comTurn
+          ){
+            hasWinner=true;
+          }
+          //세로줄 검사
+          if(
+            rows[0][randci].textContent===comTurn&&
+            rows[1][randci].textContent===comTurn&&
+            rows[2][randci].textContent===comTurn
+          ){
+            hasWinner=true;
+          }
+          //대각선 검사
+          if(
+            rows[0][0].textContent===comTurn&&
+            rows[1][1].textContent===comTurn&&
+            rows[2][2].textContent===comTurn
+          ){
+            hasWinner=true;
+          }
+          if(
+            rows[0][2].textContent===comTurn&&
+            rows[1][1].textContent===comTurn&&
+            rows[2][0].textContent===comTurn
+          ){
+            hasWinner=true;
+          }
+          return hasWinner;
+        }
+        // const checkWinnerAndDraw=(target)=>{
+        //   let hasWinner=checkWinner(event.target);
+        //             if(hasWinner){
+        //               $result.textContent=`${turn}가 승리!`;
+        //               $table.removeEventListener('click',callback);
+        //               return;
+        //             }
+        //             //무승부 검사
+        //             let draw=rows.flat().every((cell)=>cell.textContent);
+        //             if(draw){
+        //               $result.textContent=`무승부`;
+        //               return;
+        //             }
+        //             turn=turn==='X'?'O':'X';
+        // }
+        let clickable=true;
+        const callback=(event)=>{
+                  if(!clickable){return;}
+                    // event.stopPropagation 이벤트 버블링 막을 때 td에 달아줌 table에 버블링 막기 위함
+                    //칸에 글자가 있나?
+                    if(event.target.textContent) {
+                      console.log('빈칸이 아닙니다');
+                      return;
+                      // event.currentTarget:진짜 event 붙인것 td말고 table event 원할때(event bubbling)
+                      }
+                    console.log('빈칸입니다');
+                    event.target.textContent=turn;
+                    //checkWinnerAndDraw(event.target);
+                    //승부 확인
+                    let hasWinner=checkWinner(event.target);
+                    if(hasWinner){
+                      $result.textContent=`${turn}가 승리!`;
+                      $table.removeEventListener('click',callback);
+                      return;
+                    }
+                    
+                    //무승부 검사
+                    let draw=rows.flat().every((cell)=>cell.textContent);
+                    if(draw){
+                      $result.textContent=`무승부`;
+                      return;
+                    }
+                    /*
+                    let clickable=true;
+
+                    turn=turn==='X'?'O':'X';
+                    if(turn==='X'){
+                      clickable=false;
+                      setTimeout( ()=>
+                      const emptyCells=rows.flat().filter((v)=>!v.textContent);
+                      const radomCell=emptyCells[Math.floor(Math.random()*emtpyCells.length)];
+                      randomCell.textContent='X';
+                      checkWinnerAndDraw(randomCell);
+                      clickable=true;
+
+                    },1000);
+                    */
+                    let randri;
+                    let randci;
+                    clickable=false;
+                    setTimeout(()=>{
+                      while(1){
+                    randri=Math.floor(Math.random()*3);
+                    randci=Math.floor(Math.random()*3);
+                      if(!rows[randri][randci].textContent){
+                        rows[randri][randci].textContent='X';
+                        console.log(randri,randci);
+                        break;}
+
+                    }
+                                                                //승부 확인
+                    hasWinner=checkWinnerCom(randri,randci);
+                    if(hasWinner){
+                      $result.textContent=`COM이 승리!`;
+                      $table.removeEventListener('click',callback);
+                      return;
+                    }
+                    //무승부 검사
+                    draw=rows.flat().every((cell)=>cell.textContent);
+                    if(draw){
+                      $result.textContent=`무승부`;
+                      return;
+                    }
+                    clickable=true;
+                    },1000);
+
+
+                }
+        for(let i=0;i<3;i++){
+            const $tr=document.createElement('tr');
+            const cells=[];
+            for(let j=0;j<3;j++){
+                $td=document.createElement('td');
+                cells.push($td);
+                $tr.append($td);
+            }
+            rows.push(cells);
+            $table.append($tr);
+        }
+        $table.addEventListener('click',callback);
+        // 상위 태그에 이벤트 리스너, 하위 태그 클릭시 상위 태그의 이벤트 리스너 동작 => 이벤트 버블링
+        // $table.addEventListener('click',callback,true);하위 태그에 이벤트 리스너, 상위 태그 클릭시 하위 태그의 이벤트 리스너 동작 => 이벤트 캡쳐링 팝업 닫을 때
+        //arrayfrom:유사배열을 배열로 바꾸어줌
+        body.append($table);
+        body.append($result);
+    </script>
+    
+</body>
+</html>
