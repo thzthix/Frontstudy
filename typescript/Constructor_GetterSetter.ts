@@ -35,3 +35,9 @@ employee1.fullName='aibao'; //setter호출
 // public:클래스의 외부에서 접근 가능 (public멤버를 노출시키기 위해서 public키워드를 명시할 필요 없음)
 // private:클래스 내에서 접근가능, 외부에서 접근 불가능
 // protected: 클래스 내부, 그리고 상속받은 자식 클래스에서 접근 가능
+
+
+/* get, set에 대하여
+[error TS1056: Accessors are only available when targeting ECMAScript 5 and higher.]가 발생하는 경우가 있네요.
+$> tsc --watch --target es5 app.ts
+...로 바꿔서 실행하니 됩니다.*/
