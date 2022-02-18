@@ -1,4 +1,4 @@
-// Generic :클래스나 함수를 다양한 타입으로 재사용할 수 있다.
+// Generic :클래스나 함수,interface를 다양한 타입으로 재사용할 수 있다.
 function getSize <T>(arr:T[]):number{
     return arr.length;
 }
